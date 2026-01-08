@@ -1,0 +1,30 @@
+!pip install gensim nltk
+import nltk
+from nltk.tokenize import word_tokenize
+from gensim.models import Word2Vec
+
+nltk.download('punkt')
+sentences = [
+    "my name is likhithA",
+    "i am studing artifical intelligent",
+    "artifical intelligence is changing the world"
+]
+
+# Tokenize sentences
+tokenized_sentences = [word_tokenize(sentence.lower()) for sentence in sentences]
+
+print(tokenized_sentences)
+model = Word2Vec(
+    sentences=tokenized_sentences,
+    vector_size=100,
+    window=5,
+    min_count=1,
+    workers=4
+)
+vector = model.wv['intelligence']
+
+print("Embedding vector for 'intelligence':")
+print(vector)
+print("\nVector length:", len(vector))
+similar_words = model.wv.most_similar('intelligence')
+print(similar_words)
